@@ -37,7 +37,7 @@ void createmsg(int& key_id);
 void findmsg(int key_id);
 void sendmsg(int key_id);
 void sendmsg(int key_id, int mtype);
-void sendmsg(int key_id, pcbbuffer* buf);
+void sendmsg(int key_id, pcbbuf* buf);
 void getmsg(int key_id);
 void getmsg(int key_id, int mtype);
 void getmsg(int key_id, pcbbuf* buf);

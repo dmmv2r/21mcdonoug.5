@@ -32,7 +32,7 @@ key_t getkeyid(int key_id) {
 
 int getshmid(int key_id) {
    int shmid = shmget(getkeyid(key_id), 0, 0);
-   if(shmd == -1) {
+   if(shmid == -1) {
       perrandquit();
    }
    return shmid;
@@ -121,7 +121,7 @@ void unlockall(int semid, int size) {
       op[i].sem_op = 1;
       op[i].sem_flg = 0;
    }
-   if(semop(semid, op, semsize) == -1) {
+   if(semop(semid, op, size) == -1) {
       perrandquit();
    }
 }
@@ -138,8 +138,8 @@ void lockall(int semid, int size) {
    }
 }
 
-void destroysem(int shmid) {
-   if(shmctl(semid, o, IPC_RMID) = -1) {
+void destroysem(int semid) {
+   if(shmctl(semid, 0, IPC_RMID) = -1) {
       perrandquit();
    }
 }
@@ -244,18 +244,18 @@ void destroymsg(int key_id) {
 }
 
 void ipccleanup() {
-   for(int shmid : segments) {
-      if(shmctl(shmid, IPC_RMID, NULL) == -1) {
+   for(int i = 0; i < segments.size(); i++) {
+      if(shmctl(i, IPC_RMID, NULL) == -1) {
          perrandquit();
       }
    }
-   for(int semid : semaphores) {
-      if(semctl(semid, 0, IPC_RMID) == -1) {
+   for(int i = 0; i < semaphores.size(); i++) {
+      if(semctl(i, 0, IPC_RMID) == -1) {
          perrandquit();
       }
    }
-   for(msgid : queues) {
-      if(msgctl(msgid, IPC_RMID, NULL) == -1) {
+   for(int i = 0; i < queues.size(); i++) {
+      if(msgctl(i, IPC_RMID, NULL) == -1) {
          perrandquit();
       }
    }
